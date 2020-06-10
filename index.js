@@ -90,7 +90,20 @@ function Prompt() {
             else if (selection === options[6]) {
                 console.log('Update An Employee Role was selected')
                 return inquirer
-                .prompt()
+                .prompt([{
+                    type: 'list',
+                    name: 'employee',
+                    message: "Choose an employee to update.",
+                    choices: /* employee list from database*/['Employee 1', 'Employee 2']
+                },
+                {
+                    type: 'text',
+                    name: 'role',
+                    message: "What is the employee's new role?"
+                }]).then(({employee, role}) => {
+                    console.log(employee, role);
+                    Prompt();
+                })
             }
 
         })
