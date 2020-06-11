@@ -1,4 +1,13 @@
 const inquirer = require('inquirer');
+// get the client
+const mysql = require('mysql2');
+ 
+// create the connection to database
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  database: './db/employee_db'
+});
 const options = ["View All Departments", "View All Employees", "View All Roles", "Add A Department", "Add A Role", "Add An Employee", "Update An Employee Role"]
 function Prompt() {
 
