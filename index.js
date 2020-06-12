@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+// const router = require('express').Router();
 // get the client
 const mysql = require('mysql2');
  
@@ -6,8 +7,10 @@ const mysql = require('mysql2');
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  database: './db/employee_db'
+  password: 'Qe5!05QDxH%V',
+  database: 'employee_db'
 });
+
 const options = ["View All Departments", "View All Employees", "View All Roles", "Add A Department", "Add A Role", "Add An Employee", "Update An Employee Role"]
 function Prompt() {
 
@@ -23,17 +26,28 @@ function Prompt() {
         .then(({selection}) => {
             if (selection === options[0]) {
                 console.log('View All Departments was selected')
-                Prompt();
+
+                connection.promise().query('SELECT * FROM department')
+                    .then( ([rows, fields]) => {
+                        console.log(rows);
+                        Prompt();
+                    })
             }
             else if (selection === options[1]) {
                 console.log('View All Employees was selected')
-                Prompt();
-            }
-            else if (selection === options[2]) {
+                connection.promise().query('SELECT * FROM employee')
+                    .then( ([rows, fields]) => {
+                        console.log(rows);
+                        Prompt();
+                    })            
+            } else if (selection === options[2]) {
                 console.log('View All Roles was selected')
-                Prompt();
-            }
-            else if (selection === options[3]) {
+                connection.promise().query('SELECT * FROM role')
+                    .then( ([rows, fields]) => {
+                        console.log(rows);
+                        Prompt();
+                    })            
+            } else if (selection === options[3]) {
                 console.log('Add A Department was selected')
                 return inquirer
                     .prompt({
@@ -42,10 +56,15 @@ function Prompt() {
                         message: 'What is the name of the department?'
                     }).then(({department}) => {
                         console.log(department)
+                        connection.promise().query(
+                            'INSERT INTO department SET ?',
+                            {
+                                department: department
+                            }
+                        )
                         Prompt();
                     })
-            }
-            else if (selection === options[4]) {
+            } else if (selection === options[4]) {
                 console.log('Add A Role was selected')
                 return inquirer
                     .prompt([{
@@ -67,8 +86,7 @@ function Prompt() {
                         console.log(role, salary, department)
                         Prompt();
                     })
-            }
-            else if (selection === options[5]) {
+            } else if (selection === options[5]) {
                 console.log('Add An Employee was selected')
                 return inquirer
                     .prompt([{
@@ -95,8 +113,7 @@ function Prompt() {
                         console.log(firstName, lastName, role, manager)
                         Prompt();
                     })
-            }
-            else if (selection === options[6]) {
+            } else if (selection === options[6]) {
                 console.log('Update An Employee Role was selected')
                 return inquirer
                 .prompt([{
