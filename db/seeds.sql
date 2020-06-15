@@ -1,14 +1,15 @@
 INSERT INTO department (department)
 VALUES ('Development'), ('Design');
 
-INSERT INTO role (title, salary, department_id)
-VALUES ('Designer', 50000.00, '2'),
-        ('Web Developer', 60000.00, '1');
+INSERT INTO role (title, salary, department_name)
+VALUES ('Designer', 50000.00, 'Design'),
+        ('Web Developer', 60000.00, 'Development');
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ('Andy', 'Sanchez', 2, 2),
-        ('Kayla', 'Roebuck', 1, 1);
+INSERT INTO manager (manager_name, department_name)
+VALUES ('Jane Doe', 'Development'),
+        ('John Smith', 'Design');
 
-INSERT INTO manager (first_name, last_name, department_id)
-VALUES ('Jane', 'Doe', 1),
-        ('John', 'Smith', 2);
+INSERT INTO employee (first_name, last_name, role_name, manager_name)
+VALUES ('Andy', 'Sanchez', 'Web Developer', 'John Smith'),
+        ('Kayla', 'Roebuck', 'Designer', 'Jane Doe');
+
